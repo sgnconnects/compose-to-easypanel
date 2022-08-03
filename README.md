@@ -1,6 +1,8 @@
 # Docker Compose to Easypanel
 
-This little CLI makes it possible to create an Easypanel Schema (that can be hosted on Easypanel) from a docker compose
+This little CLI makes it possible to create an Easypanel Schema (that can be hosted on Easypanel) from a docker-compose file
+
+Easypanel is server controll panel based on Docker (easypanel.io)[easypanel.io]
 
 ## CLI Quickstart
 
@@ -16,7 +18,8 @@ npx compose-to-easypanel -i <docker-compose.yml> -o <output-file.json>
 - `environment`
 - `volumes`
 
-**please note**  
+### Environment
+
 the environment variables used in the compose file have to be hard coded and not loaded via an .env file
 
 **Supported**
@@ -41,7 +44,7 @@ if the image property equals `mysql`, `mongo`, `postgres` or `redis` the script 
 
 the password used to secure the password comes from the env variable `PASSWORD` if it does not exist a new one is generated
 
-**Will Create a Postgres Service with Password 123456**
+**E.G. Create a Postgres Service with Password 123456:**
 
 ```yml
 # ...
