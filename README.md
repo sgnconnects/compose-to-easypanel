@@ -4,7 +4,9 @@ This little CLI makes it possible to create an Easypanel Schema (that can be hos
 
 Easypanel is server controll panel based on Docker [easypanel.io](https://easypanel.io).
 
-## CLI Quickstart
+## Quickstart
+
+the packages is hosted on npmjs see here: [compose-to-easypanel](https://npmjs.com/package/compose-to-easypanel)
 
 ```sh
 npx compose-to-easypanel -i <docker-compose.yml> -o <output-file.json>
@@ -54,4 +56,11 @@ db:
     PASSWORD: "123456"
 ```
 
-## Example
+## Contribution
+
+Contrubution is always welcome :-)
+
+1. Fork the Repo
+2. Create a Banch from `master`
+3. Edit the Source Code
+4. Submit a PR
