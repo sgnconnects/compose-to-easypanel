@@ -1,0 +1,35 @@
+{
+  "name": "compose-to-easypanel",
+  "version": "1.0.0",
+  "description": "create a esypanel sevice schema from a docker-compose file",
+  "main": "dist/index.js",
+  "scripts": {
+    "build:ts": "tsc -p .",
+    "watch:ts": "tsc -p . --watch",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ravenbroetzmann/compose-to-easypanel.git"
+  },
+  "keywords": [
+    "easypanel",
+    "docker",
+    "docker-compose",
+    "server-control-panel"
+  ],
+  "author": "Raven Brötzmann",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ravenbroetzmann/compose-to-easypanel/issues"
+  },
+  "homepage": "https://github.com/ravenbroetzmann/compose-to-easypanel#readme",
+  "devDependencies": {
+    "@types/node": "^18.6.3",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "yaml": "^2.1.1"
+  }
+}
