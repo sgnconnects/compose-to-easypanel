@@ -2,7 +2,7 @@
 
 This little CLI makes it possible to create an Easypanel Schema (that can be hosted on Easypanel) from a docker-compose file.
 
-Easypanel is server controll panel based on Docker [easypanel.io](https://easypanel.io).
+Easypanel is a Beautiful , easy to use Server controll panel based on Docker [easypanel.io](https://easypanel.io).
 
 ## Quickstart
 
