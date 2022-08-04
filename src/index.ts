@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { writeJson } from "./jsonWriter";
 import { parseDockerToEasypanel } from "./parser";
 import { Template } from "./parser/types";
