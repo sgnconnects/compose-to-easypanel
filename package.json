@@ -1,10 +1,10 @@
 {
   "name": "compose-to-easypanel",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "create a esypanel sevice schema from a docker-compose file",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
   "bin": {
-    "compose-to-easypanel": "dist/index.js"
+    "compose-to-easypanel": "./dist/index.js"
   },
   "scripts": {
     "build:ts": "tsc -p .",

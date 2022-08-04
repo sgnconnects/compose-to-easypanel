@@ -2,13 +2,15 @@
 
 [compose-to-easypanel](https://npmjs.com/package/compose-to-easypanel)
 
-Easypanel is a Beautiful , easy to use Server controll panel based on Docker [easypanel.io](https://easypanel.io).
+Easypanel is a Beautiful, Easy to use Server Control Panel based on Docker [easypanel.io](https://easypanel.io).
+
+with this package you are able to create an Easypanel Schema based on your docker-compose file
 
 ## Quickstart
 
 ### Via Npx
 
-the cli can be easaly run via npx:
+The CLI can be easily run via npx:
 
 ```sh
 npx compose-to-easypanel <projectName> -i <docker-compose.yml> -o <output-file.json>
@@ -26,7 +28,7 @@ compose-to-easypanel <projectName> -i <docker-compose.yml> -o <output-file.json>
 
 ## Example
 
-Creating an Mysql application with adminer as dashboard
+Creating an Mysql application with Adminer as Dashboard
 
 ### Write The Compose
 
@@ -57,7 +59,7 @@ npx <mysql-adminer> -i ./docker-compose.yml -o ./mysql-adminer-schema.json
 
 ### Copy the Schema
 
-after running this command you should be able to view json schema under `./mysql-adminer-schema.json`
+after running this command you should be able to view the json schema under `./mysql-adminer-schema.json`
 
 Generated Schema:
 
@@ -90,7 +92,7 @@ Generated Schema:
 
 ### Create The Services
 
-after you did copy the schema you can go to your easypanel Dashboard go to `your-project`, select `templates` and scroll all the way down to **developer** an then click `Create from Schema`
+after you copied the schema you can go to your easypanel Dashboard. Go to `your-project`, select `templates` and scroll all the way down to **developer** an then click `Create from Schema`
 
 ## Supported Docker Compose Properties
 
@@ -113,7 +115,6 @@ Generated Schema
 
 ```json
 {
-  //...
   "source": {
     "type": "image",
     "image": "easypanel/easypanel"
@@ -152,11 +153,10 @@ ports:
   - 8000:5000
 ```
 
-Genrated Schema:
+Generated Schema:
 
 ```json
 {
-  //...
   "ports": [
     {
       "published": 3000,
@@ -181,7 +181,7 @@ environment:
   ANOTHER_SECRET: ohooho-secret
 ```
 
-Genrated Schema:
+Generated Schema:
 
 ```json
 {
@@ -190,7 +190,7 @@ Genrated Schema:
 }
 ```
 
-**Its currently not supported to load your env varibles through an .env file**
+**Its currently not supported to load your env variables through an .env file**
 
 ```yml
 # ...
@@ -210,7 +210,7 @@ volumes:
   - my-volume:/etc/my/volume
 ```
 
-Genrated Schema:
+Generated Schema:
 
 ```json
 {
@@ -241,7 +241,7 @@ Easypanel supports all popular databases out of the box:
 
 The Cli automatically creates an database service if the official image is used, however sometimes you need to provide an custom image, to do that you need to provide and env Variable in your `docker-compose` named `EASYPANEL_DATABASE` with the value of one database service (`postgres`, `mysql`, `mongo`,`redis`)
 
-you also need to provide an Password env variable if not a random password gets generated
+you also need to provide an Password env variable, otherwise a new one is created
 
 - Mongo: `MONGO_INITDB_ROOT_PASSWORD: <password>`
 - Postgres: `POSTGRES_PASSWORD: <password>`
@@ -257,19 +257,18 @@ db:
     POSTGRES_PASSWORD: "super-password"
 ```
 
-genreated Schema
+Generated Schema
 
 ```json
 {
   "type": "postgres",
   "data": {
-    //...
     "password": "super-password"
   }
 }
 ```
 
-with custom image
+With custom image
 
 ```yml
 db:
@@ -279,13 +278,12 @@ db:
     PASSWORD: "super-password"
 ```
 
-genreated Schema
+Generated Schema
 
 ```json
 {
   "type": "postgres",
   "data": {
-    //...
     "image": "myuser/postgres",
     "password": "super-password"
   }
@@ -294,9 +292,9 @@ genreated Schema
 
 ## Contribution
 
-Contrubution is always welcome :-)
+Contribution is always welcome :-)
 
 1. Fork the Repo
-2. Create a Banch from `master`
+2. Create a Branch from `master`
 3. Edit the Source Code
 4. Submit a PR
