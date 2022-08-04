@@ -93,6 +93,9 @@ Generated Schema:
 
 after you copied the schema you can go to your easypanel Dashboard. Go to `your-project`, select `templates` and scroll all the way down to **developer** an then click `Create from Schema`
 
+Please note:
+Domains and Proxys are currently not supported, you need to add these manually via the Easypanel dashboard
+
 ## Supported Docker Compose Properties
 
 - `image`
