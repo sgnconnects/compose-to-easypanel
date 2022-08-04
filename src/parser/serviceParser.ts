@@ -82,7 +82,6 @@ export function parseAppService(
   projectName: string,
   serviceName: string,
   image: string,
-  command?: string,
   ports?: string[],
   environment?: { [keys: string]: string },
   volumes?: string[]
@@ -96,9 +95,7 @@ export function parseAppService(
         type: "image",
         image,
       },
-      deploy: {
-        command,
-      },
+
       ports: ports?.map((port) => {
         return {
           published: parseInt(port.split(":")[0]),

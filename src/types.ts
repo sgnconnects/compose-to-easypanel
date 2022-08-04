@@ -11,5 +11,4 @@ export interface DockerService {
   ports?: string[];
   environment?: { [key: string]: string };
   volumes?: string[];
-  command?: string;
 }

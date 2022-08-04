@@ -19,7 +19,7 @@ export function parseDockerToEasypanel(
 
   const easypanelServices: TemplateSchema["services"] = serviceKeys.map(
     (serviceKey) => {
-      const { container_name, environment, image, ports, volumes, command } =
+      const { container_name, environment, image, ports, volumes } =
         file.services[serviceKey];
       const serviceName = container_name || serviceKey;
       const serviceType = getEasypanelServiceType({ environment, image });
@@ -79,7 +79,6 @@ export function parseDockerToEasypanel(
           projectName,
           serviceName,
           image || "",
-          command,
           ports,
           environment,
           volumes
