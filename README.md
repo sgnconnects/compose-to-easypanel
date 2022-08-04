@@ -72,7 +72,6 @@ Generated Schema:
         "projectName": "test",
         "serviceName": "adminer",
         "source": { "type": "image", "image": "adminer" },
-        "deploy": {},
         "ports": [{ "published": 8080, "target": 8080 }]
       }
     },
