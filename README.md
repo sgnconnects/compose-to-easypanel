@@ -185,7 +185,6 @@ Generated Schema:
 
 ```json
 {
-  //...
   "env": "SECRET=my-super-secret\nANOTHER_SCRET=ohooho-secret"
 }
 ```
@@ -214,7 +213,7 @@ Generated Schema:
 
 ```json
 {
-  //...
+  
   "volumes": [
     {
       "type": "bind",
