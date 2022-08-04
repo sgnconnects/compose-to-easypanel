@@ -2,9 +2,7 @@
 
 [compose-to-easypanel](https://npmjs.com/package/compose-to-easypanel)
 
-This little CLI makes it possible to create an Easypanel Schema (that can be hosted on your Servers via Easypanel) from a docker-compose file.
-
-Easypanel is a Server Controll Panel powered by Docker, that makes it easy to setup, create and scale services from any codebase. [easypanel.io](https://easypanel.io).
+Easypanel is a Beautiful , easy to use Server controll panel based on Docker [easypanel.io](https://easypanel.io).
 
 ## Quickstart
 
