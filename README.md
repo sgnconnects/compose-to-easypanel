@@ -24,6 +24,74 @@ npm install -g compose-to-easypanel
 compose-to-easypanel <projectName> -i <docker-compose.yml> -o <output-file.json>
 ```
 
+## Example
+
+Creating an Mysql application with adminer as dashboard
+
+### Write The Compose
+
+`./docker-compose.yml`
+
+```yml
+version: "3"
+services:
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  db:
+    image: mysql:5.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: examplePassword
+      MYSQL_PASSWORD: examplePasswordNonRoot
+```
+
+### Run the CLI
+
+```sh
+npx <mysql-adminer> -i ./docker-compose.yml -o ./mysql-adminer-schema.json
+```
+
+### Copy the Schema
+
+after running this command you should be able to view json schema under `./mysql-adminer-schema.json`
+
+Generated Schema:
+
+```json
+{
+  "services": [
+    {
+      "type": "app",
+      "data": {
+        "projectName": "test",
+        "serviceName": "adminer",
+        "source": { "type": "image", "image": "adminer" },
+        "deploy": {},
+        "ports": [{ "published": 8080, "target": 8080 }]
+      }
+    },
+    {
+      "type": "mysql",
+      "data": {
+        "projectName": "test",
+        "serviceName": "db",
+        "image": "mysql:5.6",
+        "rootPassword": "examplePassword",
+        "password": "examplePasswordNonRoot"
+      }
+    }
+  ]
+}
+```
+
+### Create The Services
+
+after you did copy the schema you can go to your easypanel Dashboard go to `your-project`, select `templates` and scroll all the way down to **developer** an then click `Create from Schema`
+
 ## Supported Docker Compose Properties
 
 - `image`
@@ -31,7 +99,6 @@ compose-to-easypanel <projectName> -i <docker-compose.yml> -o <output-file.json>
 - `ports`
 - `environment`
 - `volumes`
-- `command`
 
 ### Image
 
@@ -163,26 +230,6 @@ Genrated Schema:
 }
 ```
 
-### Command
-
-docker-compose file:
-
-```yml
-# ...
-command: "yarn start"
-```
-
-Genrated Schema:
-
-```json
-{
-  //...
-  "deploy": {
-    "command": "yarn start"
-  }
-}
-```
-
 ## Database Services
 
 Easypanel supports all popular databases out of the box:
@@ -194,7 +241,7 @@ Easypanel supports all popular databases out of the box:
 
 The Cli automatically creates an database service if the official image is used, however sometimes you need to provide an custom image, to do that you need to provide and env Variable in your `docker-compose` named `EASYPANEL_DATABASE` with the value of one database service (`postgres`, `mysql`, `mongo`,`redis`)
 
-you also need to provide an Password env variable
+you also need to provide an Password env variable if not a random password gets generated
 
 - Mongo: `MONGO_INITDB_ROOT_PASSWORD: <password>`
 - Postgres: `POSTGRES_PASSWORD: <password>`
@@ -207,7 +254,7 @@ docker-compose file
 db:
   image: "postgres"
   environment:
-    PASSWORD: "super-password"
+    POSTGRES_PASSWORD: "super-password"
 ```
 
 genreated Schema

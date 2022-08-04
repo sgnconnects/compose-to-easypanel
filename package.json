@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "create a esypanel sevice schema from a docker-compose file",
   "main": "dist/index.js",
+  "bin": "dist/index.js",
   "scripts": {
     "build:ts": "tsc -p .",
     "watch:ts": "tsc -p . --watch",
@@ -29,7 +30,9 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "commander": "^9.4.0",
     "fs": "^0.0.1-security",
-    "yaml": "^2.1.1"
+    "yaml": "^2.1.1",
+    "zod": "^3.17.10"
   }
 }

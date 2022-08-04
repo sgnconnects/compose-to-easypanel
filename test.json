@@ -1,0 +1,28 @@
+{
+  "services": [
+    {
+      "type": "app",
+      "data": {
+        "projectName": "test",
+        "serviceName": "adminer",
+        "source": { "type": "image", "image": "adminer" },
+        "deploy": {},
+        "ports": [{ "published": 8080, "target": 8080 }],
+        "mounts": [
+          { "type": "volume", "name": "volume", "mountPath": "/vol" },
+          { "type": "bind", "hostPath": "/bind", "mountPath": "/bind" }
+        ]
+      }
+    },
+    {
+      "type": "mysql",
+      "data": {
+        "projectName": "test",
+        "serviceName": "db",
+        "image": "mysql:5.6",
+        "rootPassword": "examplePassword",
+        "password": "examplePasswordNonRoot"
+      }
+    }
+  ]
+}
