@@ -80,7 +80,6 @@ Generated Schema:
       "data": {
         "projectName": "test",
         "serviceName": "db",
-        "image": "mysql:5.6",
         "rootPassword": "examplePassword",
         "password": "examplePasswordNonRoot"
       }
