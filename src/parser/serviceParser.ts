@@ -95,7 +95,6 @@ export function parseAppService(
         type: "image",
         image,
       },
-
       ports: ports?.map((port) => {
         return {
           published: parseInt(port.split(":")[0]),
