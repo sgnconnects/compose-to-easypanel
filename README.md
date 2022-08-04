@@ -44,7 +44,7 @@ services:
       - 8080:8080
 
   db:
-    image: mysql:5.6
+    image: mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: examplePassword
