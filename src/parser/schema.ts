@@ -52,6 +52,14 @@ export const appMountsSchema = z
   )
   .default([]);
 
+export const appDeploySchema = z
+  .object({
+    replicas: z.number().default(1),
+    command: z.string().nullable().default(null),
+    zeroDowntime: z.boolean().default(true),
+  })
+  .default({});
+
 export const appSchema = z.object({
   projectName: projectNameRule,
   serviceName: serviceNameRule,
@@ -78,13 +86,7 @@ export const appSchema = z.object({
       secure: z.boolean().default(true),
     })
     .default({}),
-  deploy: z
-    .object({
-      replicas: z.number().default(1),
-      command: z.string().optional(),
-      args: z.string().optional(),
-    })
-    .default({}),
+  deploy: appDeploySchema,
   domains: z
     .array(
       z.object({

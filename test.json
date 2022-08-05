@@ -6,7 +6,7 @@
         "projectName": "test",
         "serviceName": "adminer",
         "source": { "type": "image", "image": "adminer" },
-        "deploy": {},
+        "deploy": { "command": "echo working!" },
         "ports": [{ "published": 8080, "target": 8080 }],
         "mounts": [
           { "type": "volume", "name": "volume", "mountPath": "/vol" },
@@ -19,7 +19,7 @@
       "data": {
         "projectName": "test",
         "serviceName": "db",
-        "image": "mysql:5.6",
+        "image": "mysql:543",
         "rootPassword": "examplePassword",
         "password": "examplePasswordNonRoot"
       }

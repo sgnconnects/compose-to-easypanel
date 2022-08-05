@@ -84,7 +84,8 @@ export function parseAppService(
   image: string,
   ports?: string[],
   environment?: { [keys: string]: string },
-  volumes?: string[]
+  volumes?: string[],
+  command?: string
 ): SingleServiceSchema {
   return {
     type: "app",
@@ -94,6 +95,9 @@ export function parseAppService(
       source: {
         type: "image",
         image,
+      },
+      deploy: {
+        command: command,
       },
       ports: ports?.map((port) => {
         return {
