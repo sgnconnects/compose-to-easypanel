@@ -102,6 +102,7 @@ Domains and Proxys are currently not supported, you need to add these manually v
 - `ports`
 - `environment`
 - `volumes`
+- `command`
 
 ### Image
 
@@ -214,7 +215,6 @@ Generated Schema:
 
 ```json
 {
-  
   "volumes": [
     {
       "type": "bind",
@@ -227,6 +227,28 @@ Generated Schema:
       "mountPath": "/etc/my/volume"
     }
   ]
+}
+```
+
+### Command
+
+docker-compose file:
+
+please specify the command as string!
+
+```yml
+# ...
+command: yarn start # that works
+# command: ["yarn", "start"] won't work !
+```
+
+Generated Schema:
+
+```json
+{
+  "deploy": {
+    "command": "yarn start"
+  }
 }
 ```
 
