@@ -54,7 +54,7 @@ services:
 ### Run the CLI
 
 ```sh
-npx <mysql-adminer> -i ./docker-compose.yml -o ./mysql-adminer-schema.json
+npx mysql-adminer -i ./docker-compose.yml -o ./mysql-adminer-schema.json
 ```
 
 ### Copy the Schema
