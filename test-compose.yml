@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  test:
+    container_name: "test_app",
+    ports:
+      - 3000:3000
+    environment:
+      API_KEY: "api_key"
