@@ -1,3 +1,4 @@
+import { randomPassword } from "./schema";
 import {
   AppService,
   MongoService,
@@ -7,11 +8,12 @@ import {
   SingleServiceSchema,
   TemplateSchema,
 } from "./types";
+import { DockerComposeService, envVariable } from "./ymlParser";
 
 export function parseMongoService(
   projectName: string,
   serviceName: string,
-  password: string,
+  environment?: DockerComposeService["environment"],
   image?: string
 ): SingleServiceSchema {
   return {
@@ -19,8 +21,10 @@ export function parseMongoService(
     data: {
       projectName,
       serviceName,
-      password,
-      image,
+      password:
+        envVariable(environment, "MONGO_INITDB_ROOT_PASSWORD") ||
+        randomPassword(),
+      image: image !== "mongo" ? image : undefined,
     },
   };
 }
@@ -28,7 +32,7 @@ export function parseMongoService(
 export function parsePostgresService(
   projectName: string,
   serviceName: string,
-  password: string,
+  environment?: DockerComposeService["environment"],
   image?: string
 ): SingleServiceSchema {
   return {
@@ -36,8 +40,9 @@ export function parsePostgresService(
     data: {
       projectName,
       serviceName,
-      password,
-      image,
+      password:
+        envVariable(environment, "POSTGRES_PASSWORD") || randomPassword(),
+      image: image !== "postgres" ? image : undefined,
     },
   };
 }
@@ -45,8 +50,7 @@ export function parsePostgresService(
 export function parseMySqlService(
   projectName: string,
   serviceName: string,
-  password: string,
-  rootPassword: string,
+  environment?: DockerComposeService["environment"],
   image?: string
 ): SingleServiceSchema {
   return {
@@ -54,9 +58,10 @@ export function parseMySqlService(
     data: {
       projectName,
       serviceName,
-      password,
-      image,
-      rootPassword,
+      password: envVariable(environment, "MYSQL_PASSWORD") || randomPassword(),
+      image: image !== "mysql" ? image : undefined,
+      rootPassword:
+        envVariable(environment, "MYSQL_ROOT_PASSWORD") || randomPassword(),
     },
   };
 }
@@ -64,7 +69,7 @@ export function parseMySqlService(
 export function parseRedisService(
   projectName: string,
   serviceName: string,
-  password: string,
+  environment?: DockerComposeService["environment"],
   image?: string
 ): SingleServiceSchema {
   return {
@@ -72,8 +77,8 @@ export function parseRedisService(
     data: {
       projectName,
       serviceName,
-      password,
-      image,
+      password: envVariable(environment, "REDIS_PASSWORD") || randomPassword(),
+      image: image !== "redis" ? image : undefined,
     },
   };
 }
@@ -82,10 +87,10 @@ export function parseAppService(
   projectName: string,
   serviceName: string,
   image: string,
-  ports?: string[],
+  ports?: (string | number)[],
   environment?: { [keys: string]: string },
   volumes?: string[],
-  command?: string
+  command?: string | string[]
 ): SingleServiceSchema {
   return {
     type: "app",
@@ -97,12 +102,14 @@ export function parseAppService(
         image,
       },
       deploy: {
-        command: command,
+        command: Array.isArray(command) ? command.join(" ") : command,
       },
       ports: ports?.map((port) => {
         return {
-          published: parseInt(port.split(":")[0]),
-          target: parseInt(port.split(":")[1]),
+          published:
+            typeof port === "number" ? port : parseInt(port.split(":")[0]),
+          target:
+            typeof port === "number" ? port : parseInt(port.split(":")[1]),
         };
       }),
       env: environment

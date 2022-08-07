@@ -13,9 +13,13 @@ const Header: React.FC = () => {
         Compose To Easypanel
       </Heading>
       <Flex gap={2}>
-        <Link href="#docs">
-          <Button bg="red.300">Docs</Button>
-        </Link>
+        <a
+          href="https://github.com/ravenbroetzmann/compose-to-easypanel/blob/master/README.md"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Button bg="gray.300">Docs</Button>
+        </a>
         <a
           href="https://github.com/ravenbroetzmann/compose-to-easypanel"
           rel="noopener noreferrer"

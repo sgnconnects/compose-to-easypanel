@@ -1,6 +1,6 @@
 import { DefinitionsService } from "@gfi-centre-ouest/docker-compose-spec-typescript/lib/docker-compose-spec-v3.0";
 import YAML from "yaml";
-import { supportedServiceTypes } from "./schema";
+import { supportedComposeProps, supportedServiceTypes } from "./schema";
 
 export interface DockerCompose {
   version: string;
@@ -21,12 +21,12 @@ export function isVersion3(versionString: string) {
   return false;
 }
 
-export function hasEnvVariable(
+export function envVariable(
   environment: DefinitionsService["environment"],
   envVariable: string
-) {
+): string | false {
   //@ts-ignore
-  if (environment && environment[envVariable]) return true;
+  if (environment && environment[envVariable]) return environment[envVariable];
   return false;
 }
 
@@ -65,4 +65,20 @@ export function getEasypanelServiceType(
   } else serviceType = "app";
 
   return serviceType;
+}
+
+export function findNotSupportedProps(yml: DockerCompose): string[] {
+  const serviceKeys = Object.keys(yml.services);
+
+  let notSupported: string[] = [];
+  serviceKeys.forEach((serviceKey) => {
+    const service = yml.services[serviceKey];
+    const serviceProps = Object.keys(service);
+
+    serviceProps.forEach((prop) => {
+      if (!supportedComposeProps.includes(prop)) notSupported.push(prop);
+    });
+  });
+
+  return notSupported;
 }

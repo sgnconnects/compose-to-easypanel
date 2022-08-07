@@ -176,3 +176,12 @@ export const templateSchema = z.object({
 export const supportedServiceTypes: Array<
   "app" | "postgres" | "mongo" | "redis" | "mysql"
 > = ["app", "postgres", "mongo", "redis", "mysql"];
+
+export const supportedComposeProps = [
+  "container_name",
+  "image",
+  "command",
+  "ports",
+  "environment",
+  "volumes",
+];

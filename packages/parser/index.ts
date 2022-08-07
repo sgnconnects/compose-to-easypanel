@@ -1,7 +1,14 @@
-import { parsePostgresService } from "./parser";
-import { randomPassword } from "./schema";
-import { TemplateSchema } from "./types";
 import {
+  parseAppService,
+  parseMongoService,
+  parseMySqlService,
+  parsePostgresService,
+  parseRedisService,
+} from "./parser";
+import { randomPassword } from "./schema";
+import { SingleServiceSchema, TemplateSchema } from "./types";
+import {
+  findNotSupportedProps,
   getEasypanelServiceType,
   isVersion3,
   parseComposeYmlString,
@@ -29,8 +36,9 @@ export function parseYmlToEasypanel(
     if (!isVersion3(yml.version || ""))
       throw new Error("Please use Compose Version 3.x to use this generator");
 
+    const notSupportedProps = findNotSupportedProps(yml);
+    console.log(notSupportedProps);
     const serviceKeys = Object.keys(yml.services);
-
     const easypanelServices: TemplateSchema["services"] = serviceKeys.map(
       (serviceKey) => {
         const { container_name, environment, image, ports, volumes, command } =
@@ -38,119 +46,61 @@ export function parseYmlToEasypanel(
         const serviceName = container_name || serviceKey;
         const serviceType = getEasypanelServiceType({ environment, image });
 
+        let service = {};
+
         if (serviceType === "postgres") {
-          return {
-            type: "postgres",
-            data: {
-              projectName,
-              serviceName,
-              image: image !== serviceType ? image : undefined,
-              password:
-                //@ts-ignore
-                (environment && environment.POSTGRES_PASSWORD) ||
-                randomPassword(),
-            },
-          };
+          service = parsePostgresService(
+            projectName,
+            serviceName,
+            environment,
+            image
+          );
         } else if (serviceType === "mongo") {
-          return {
-            type: "mongo",
-            data: {
-              projectName,
-              serviceName,
-              image: image !== serviceType ? image : undefined,
-              password:
-                //@ts-ignore
-                (environment && environment.MONGO_INITDB_ROOT_PASSWORD) ||
-                randomPassword(),
-            },
-          };
+          service = parseMongoService(
+            projectName,
+            serviceName,
+            environment,
+            image
+          );
         } else if (serviceType === "redis") {
-          return {
-            type: "redis",
-            data: {
-              projectName,
-              serviceName,
-              image: image !== serviceType ? image : undefined,
-              password:
-                //@ts-ignore
-                (environment && environment.REDIS_PASSWORD) || randomPassword(),
-            },
-          };
+          service = parseRedisService(
+            projectName,
+            serviceName,
+            environment,
+            image
+          );
         } else if (serviceType === "mysql") {
-          return {
-            type: "mysql",
-            data: {
-              projectName,
-              serviceName,
-              image: image !== serviceType ? image : undefined,
-              rootPassword:
-                //@ts-ignore
-                (environment && environment.MYSQL_ROOT_PASSWORD) ||
-                randomPassword(),
-              password:
-                //@ts-ignore
-                (environment && environment.MYSQL_PASSWORD) || randomPassword(),
-            },
-          };
+          service = parseMySqlService(
+            projectName,
+            serviceName,
+            environment,
+            image
+          );
         } else {
-          return {
-            type: "app",
-            data: {
-              projectName,
-              serviceName,
-              source: {
-                type: "image",
-                image: image || "",
-              },
-              deploy: {
-                command: Array.isArray(command) ? command.join(" ") : command,
-              },
-              ports: ports?.map((port) => {
-                return {
-                  published:
-                    typeof port === "string"
-                      ? parseInt(port.split(":")[0])
-                      : port,
-                  target:
-                    typeof port === "string"
-                      ? parseInt(port.split(":")[1])
-                      : port,
-                };
-              }),
-              env: environment
-                ? Object.keys(environment)
-                    //@ts-ignore
-                    .map((key) => `${key}=${environment[key]}`)
-                    .join("\n")
-                : undefined,
-              mounts: volumes?.map((volume) => {
-                const hostPathOrName = volume.split(":")[0];
-                const mountPath = volume.split(":")[1];
-
-                if (
-                  hostPathOrName.split("")[0] === "/" ||
-                  hostPathOrName.split("")[0] === "."
-                ) {
-                  return {
-                    type: "bind",
-                    hostPath: hostPathOrName,
-                    mountPath,
-                  };
-                }
-
-                return {
-                  type: "volume",
-                  name: hostPathOrName,
-                  mountPath,
-                };
-              }),
-            },
-          };
+          service = parseAppService(
+            projectName,
+            serviceName,
+            image || "",
+            ports,
+            environment as { [key: string]: string },
+            volumes,
+            command
+          );
         }
+
+        return service as SingleServiceSchema;
       }
     );
 
     return {
+      warning:
+        notSupportedProps.length !== 0
+          ? `the prop/s ${notSupportedProps
+              .map((p) => `"${p}"`)
+              .join(
+                ", "
+              )} is/are currently not supported an ignored by the parser`
+          : undefined,
       schema: JSON.stringify(
         {
           services: easypanelServices,
