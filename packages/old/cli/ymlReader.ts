@@ -9,7 +9,7 @@ import { parse } from "yaml";
  * @returns parsed yaml file as an js object
  */
 export async function getYmlFile(filepath: string): Promise<DockerYml> {
-  //get yamlstring
+  //get yaml string
   const fileString = await fs.readFile(
     path.join(process.cwd(), filepath),
     "utf-8"
