@@ -1,7 +1,7 @@
 /**
- * this code defines the diffrent easypanel schemas
+ * this code defines the different easypanel schemas
  * This Code comes from the github repo easypanel/easypanel-templates
- * main contributer and developer of easypanel: https://github.com/deiucanta
+ * main contributor and developer of easypanel: https://github.com/deiucanta
  */
 
 import { z } from "zod";

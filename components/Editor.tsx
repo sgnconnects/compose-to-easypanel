@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/layout";
-import { Input, Textarea } from "@chakra-ui/react";
+import { Input, Textarea, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { parser } from "../packages/parser";
 import {
@@ -16,9 +16,14 @@ const Editor: React.FC = () => {
   const [projectName, setProjectName] = useState("");
   const [error, setError] = useState<string | undefined>();
   const [warning, setWarning] = useState<string | undefined>();
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const easypanelParser = parser();
 
   useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
     const parsed = easypanelParser.parse(yml, projectName);
     setSchema(parsed.schema || "");
     setError(parsed.error);
@@ -27,6 +32,22 @@ const Editor: React.FC = () => {
 
   return (
     <Flex flexDirection="column" gap={4}>
+      <Box h="50px">
+        {error && (
+          <Alert status="error" borderRadius={2} variant="solid">
+            <AlertIcon />
+            <AlertTitle>Parser Error: </AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+        {warning && (
+          <Alert status="warning" borderRadius={5} variant="solid">
+            <AlertIcon />
+            <AlertTitle>Parser Warning: </AlertTitle>
+            <AlertDescription>{warning}</AlertDescription>
+          </Alert>
+        )}
+      </Box>
       <Input
         padding={5}
         fontWeight="bold"
@@ -40,20 +61,6 @@ const Editor: React.FC = () => {
         value={projectName || undefined}
         onChange={(e) => setProjectName(e.target.value)}
       />
-      {error && (
-        <Alert status="error" borderRadius={2}>
-          <AlertIcon />
-          <AlertTitle>Parser Error!</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
-      {warning && (
-        <Alert status="warning" borderRadius={2}>
-          <AlertIcon />
-          <AlertTitle>Parser Warning:</AlertTitle>
-          <AlertDescription>{warning}</AlertDescription>
-        </Alert>
-      )}
       <Flex gap={4} wrap="wrap">
         <Box minW="400px" flex={1} h="600px" bg="gray.800" borderRadius={2}>
           <Textarea
