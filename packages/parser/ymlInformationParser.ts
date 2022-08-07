@@ -1,4 +1,4 @@
-import { DockerService, DockerYml } from "../types";
+import { DockerService, DockerYml } from "../cli/types";
 import { singleServiceSchema, supportedServiceTypes } from "./schema";
 import { SingleServiceSchema } from "./types";
 

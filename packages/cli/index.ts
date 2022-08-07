@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 import { writeJson } from "./jsonWriter";
-import { parseDockerToEasypanel } from "./parser";
-import { Template } from "./parser/types";
+import { parseDockerToEasypanel } from "../parser";
 import { getYmlFile } from "./ymlReader";
 import { program } from "commander";
 import path from "path";

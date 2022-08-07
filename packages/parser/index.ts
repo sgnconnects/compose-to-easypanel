@@ -1,4 +1,4 @@
-import { DockerYml } from "../types";
+import { DockerYml } from "../cli/types";
 import { randomPassword, supportedServiceTypes } from "./schema";
 import { parseAppService } from "./serviceParser";
 import { Template, TemplateSchema } from "./types";
