@@ -1,19 +1,31 @@
-export class Parser {
-  private _yml: object = {};
-  private _schema: object = {};
+import { parseComposeYmlString } from "./ymlParser";
 
-  private parseYmlToSchema() {}
+type converted = {
+  schema: string | null;
+  error?: string;
+  warning?: string;
+};
 
-  public set setYml(ymlString: string) {
-    /**
-     * @TODO parse Yml string
-     */
+export function parseYmlToEasypanel(
+  ymlString?: string,
+  projectName?: string
+): converted {
+  try {
+    const yml = parseComposeYmlString(ymlString || "");
+
+    return {
+      schema: convertSchemaToString({
+        yml,
+      }),
+    };
+  } catch (e: any) {
+    return {
+      schema: null,
+      error: e.message || "A Unknown Error Occurred",
+    };
   }
+}
 
-  public get getSchema(): object {
-    /**
-     * @TODO parse Schema
-     */
-    return this._schema;
-  }
+function convertSchemaToString(parsed: object) {
+  return JSON.stringify(parsed, null, 4);
 }

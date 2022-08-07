@@ -7,7 +7,7 @@ import Header from "../components/Header";
 
 const Home: NextPage = () => {
   return (
-    <Box bg="gray.900" w="100%">
+    <Box bg="gray.900" w="100%" p={4}>
       <Header />
       {/*<Description /> */}
       <Editor />

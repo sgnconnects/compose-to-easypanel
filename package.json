@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^2.2.6",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@gfi-centre-ouest/docker-compose-spec-typescript": "^1.0.0",
     "commander": "^9.4.0",
     "framer-motion": "^6",
     "next": "12.2.4",

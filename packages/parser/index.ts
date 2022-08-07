@@ -1,3 +1,5 @@
-import { Parser } from "./parser";
-const parser = new Parser();
-export default parser;
+import { parseYmlToEasypanel } from "./parser";
+
+export function parser() {
+  return { parse: parseYmlToEasypanel };
+}
