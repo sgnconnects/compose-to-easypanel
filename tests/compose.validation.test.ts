@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from "../packages/parser/classAproach";
+import { ERROR_MESSAGES } from "../packages/parser/definition";
 import {
   hasRequiredPropsAndTypes,
   isVersion3,
