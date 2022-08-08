@@ -6,17 +6,23 @@ with this little App you are able to create an Easypanel Schema based on your do
 
 ## Quickstart
 
-### Web
+### Ui App
+
+#### View on Netlify
 
 goto [compose-to-easypanel.netlify.app](https://compose-to-easypanel.netlify.app)
 
-### Local
+#### Local
 
 1. Clone The Repo `gh repo clone ravenbroetzmann/compose-to-easypanel`
 2. `cd compose-to-easypanel`
 3. `yarn install`,
 4. `yarn dev`
 5. the app should now be available on [localhost:3000](http://localhost:3000)
+
+### CLI
+
+`npx compose-to-easypanel <project_name> -i <docker-compose.yml> -o <schema-output-file.json>`
 
 ## Example
 
