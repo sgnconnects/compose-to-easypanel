@@ -15,7 +15,7 @@ import {
  * @param projectName the project Name
  * @returns the parsed Template
  */
-export function parser(compose: DockerCompose, projectName: string): Template {
+export function parse(compose: DockerCompose, projectName: string): Template {
   const serviceKeys = Object.keys(compose.services);
   const easypanelServices: TemplateSchema["services"] = serviceKeys.map(
     (key) => {

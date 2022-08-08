@@ -1,13 +1,14 @@
 import { Box, Flex } from "@chakra-ui/layout";
 import { Input, Textarea, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { parser } from "../packages/parser";
+
 import {
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
 } from "@chakra-ui/react";
+import { generateEasypanelFromCompose } from "../packages/parser";
 
 const Editor: React.FC = () => {
   const [yml, setYml] = useState("");
@@ -17,14 +18,13 @@ const Editor: React.FC = () => {
   const [error, setError] = useState<string | undefined>();
   const [warning, setWarning] = useState<string | undefined>();
   const [isFirstRender, setIsFirstRender] = useState(true);
-  const easypanelParser = parser();
 
   useEffect(() => {
     if (isFirstRender) {
       setIsFirstRender(false);
       return;
     }
-    const parsed = easypanelParser.parse(yml, projectName);
+    const parsed = generateEasypanelFromCompose(yml, projectName);
     setSchema(parsed.schema || "");
     setError(parsed.error);
     setWarning(parsed.warning);
