@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "dev:test": "jest --watchAll --silent=false"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.2.6",

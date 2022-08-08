@@ -1,4 +1,4 @@
-import { randomPassword } from "./schema";
+import { randomPassword } from "../schema";
 import {
   AppService,
   MongoService,
@@ -7,8 +7,10 @@ import {
   RedisService,
   SingleServiceSchema,
   TemplateSchema,
-} from "./types";
-import { DockerComposeService, envVariable } from "./ymlParser";
+} from "../types";
+import { DockerComposeService } from "../compose/parseYml";
+import { getEnvVariable } from "../compose/helper";
+import { getImage, getPassword } from "./helper";
 
 export function parseMongoService(
   projectName: string,
@@ -21,10 +23,8 @@ export function parseMongoService(
     data: {
       projectName,
       serviceName,
-      password:
-        envVariable(environment, "MONGO_INITDB_ROOT_PASSWORD") ||
-        randomPassword(),
-      image: image !== "mongo" ? image : undefined,
+      password: getPassword(environment, "mongo"),
+      image: getImage(image, "mongo"),
     },
   };
 }
@@ -40,9 +40,8 @@ export function parsePostgresService(
     data: {
       projectName,
       serviceName,
-      password:
-        envVariable(environment, "POSTGRES_PASSWORD") || randomPassword(),
-      image: image !== "postgres" ? image : undefined,
+      password: getPassword(environment, "postgres"),
+      image: getImage(image, "postgres"),
     },
   };
 }
@@ -58,10 +57,27 @@ export function parseMySqlService(
     data: {
       projectName,
       serviceName,
-      password: envVariable(environment, "MYSQL_PASSWORD") || randomPassword(),
-      image: image !== "mysql" ? image : undefined,
-      rootPassword:
-        envVariable(environment, "MYSQL_ROOT_PASSWORD") || randomPassword(),
+      password: getPassword(environment, "mysql", "normal"),
+      image: getImage(image, "mysql"),
+      rootPassword: getPassword(environment, "mysql", "root"),
+    },
+  };
+}
+
+export function parseMariaDbService(
+  projectName: string,
+  serviceName: string,
+  environment?: DockerComposeService["environment"],
+  image?: string
+): SingleServiceSchema {
+  return {
+    type: "mariadb",
+    data: {
+      projectName,
+      serviceName,
+      password: getPassword(environment, "mariadb", "normal"),
+      image: getImage(image, "mariadb"),
+      rootPassword: getPassword(environment, "mariadb", "root"),
     },
   };
 }
@@ -77,8 +93,8 @@ export function parseRedisService(
     data: {
       projectName,
       serviceName,
-      password: envVariable(environment, "REDIS_PASSWORD") || randomPassword(),
-      image: image !== "redis" ? image : undefined,
+      password: getPassword(environment, "redis"),
+      image: getImage(image, "redis"),
     },
   };
 }
