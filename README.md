@@ -57,9 +57,9 @@ paste the file contents in the left hand side textarea on the website
 
 ### Copy the Schema
 
-after running this command you can view and edit the schema on the left hand side
+after running this command you can view and edit the schema on the right hand side
 
-Generated Schema:
+**Generated Schema:**
 
 ```json
 {
@@ -90,7 +90,7 @@ Generated Schema:
 
 after you copied the schema you can go to your easypanel Dashboard. Go to `your-project`, select `templates` and scroll all the way down to **developer** an then click `Create from Schema`
 
-Please note:
+**Please note**:
 Domains and Proxys are currently not supported, you need to add these manually via the Easypanel dashboard
 
 ## Supported Docker Compose Properties
