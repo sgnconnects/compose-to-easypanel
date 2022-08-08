@@ -22,7 +22,9 @@ goto [compose-to-easypanel.netlify.app](https://compose-to-easypanel.netlify.app
 
 ### CLI
 
-`npx compose-to-easypanel <project_name> -i <docker-compose.yml> -o <schema-output-file.json>`
+```sh
+npx compose-to-easypanel <project_name> -i <docker-compose.yml> -o <schema-output-file.json>
+```
 
 ## Example
 
@@ -49,7 +51,7 @@ services:
       MYSQL_PASSWORD: examplePasswordNonRoot
 ```
 
-### Run the CLI
+### Go to the UI
 
 paste the file contents in the left hand side textarea on the website
 
