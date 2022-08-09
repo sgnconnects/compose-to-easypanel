@@ -44,3 +44,76 @@ export function getImage(
   const dbImage = image !== appType ? image : undefined;
   return dbImage;
 }
+
+/**
+ *
+ * @param ports docker compose port array
+ * @returns schema port array
+ */
+export function getPorts(ports: (string | number)[] | undefined) {
+  return ports?.map((port) => {
+    return {
+      published: typeof port === "number" ? port : parseInt(port.split(":")[0]),
+      target: typeof port === "number" ? port : parseInt(port.split(":")[1]),
+    };
+  });
+}
+
+/**
+ *
+ * @param environment docker compose env object
+ * @returns schema env string
+ */
+export function getEnv(environment: { [k: string]: string } | undefined) {
+  const parsedEnv = environment
+    ? Object.keys(environment)
+        .map((key) => `${key}=${environment[key]}`)
+        .join("\n")
+    : undefined;
+
+  return parsedEnv;
+}
+
+/**
+ *
+ * @param volumes docker compose volume array
+ * @returns schema mounts array (bind or volume)
+ */
+export function getMounts(
+  volumes: string[] | undefined
+):
+  | (
+      | { type: "bind"; hostPath: string; mountPath: string }
+      | { type: "volume"; name: string; mountPath: string }
+    )[]
+  | undefined {
+  return volumes?.map((volume) => {
+    const hostPathOrName = volume.split(":")[0];
+    const mountPath = volume.split(":")[1];
+
+    if (
+      hostPathOrName.split("")[0] === "/" ||
+      hostPathOrName.split("")[0] === "."
+    ) {
+      return {
+        type: "bind",
+        hostPath: hostPathOrName,
+        mountPath,
+      };
+    } else
+      return {
+        type: "volume",
+        name: hostPathOrName,
+        mountPath,
+      };
+  });
+}
+
+export function getDeploy(command?: string | string[]) {
+  if (command)
+    return {
+      command: Array.isArray(command) ? command.join(" ") : command,
+    };
+
+  return undefined;
+}

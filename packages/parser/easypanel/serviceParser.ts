@@ -10,7 +10,14 @@ import {
 } from "../types";
 import { DockerComposeService } from "../compose/parseYml";
 import { getEnvVariable } from "../compose/helper";
-import { getImage, getPassword } from "./helper";
+import {
+  getDeploy,
+  getEnv,
+  getImage,
+  getMounts,
+  getPassword,
+  getPorts,
+} from "./helper";
 
 export function parseMongoService(
   projectName: string,
@@ -117,43 +124,10 @@ export function parseAppService(
         type: "image",
         image,
       },
-      deploy: {
-        command: Array.isArray(command) ? command.join(" ") : command,
-      },
-      ports: ports?.map((port) => {
-        return {
-          published:
-            typeof port === "number" ? port : parseInt(port.split(":")[0]),
-          target:
-            typeof port === "number" ? port : parseInt(port.split(":")[1]),
-        };
-      }),
-      env: environment
-        ? Object.keys(environment)
-            .map((key) => `${key}=${environment[key]}`)
-            .join("\n")
-        : undefined,
-      mounts: volumes?.map((volume) => {
-        const hostPathOrName = volume.split(":")[0];
-        const mountPath = volume.split(":")[1];
-
-        if (
-          hostPathOrName.split("")[0] === "/" ||
-          hostPathOrName.split("")[0] === "."
-        ) {
-          return {
-            type: "bind",
-            hostPath: hostPathOrName,
-            mountPath,
-          };
-        }
-
-        return {
-          type: "volume",
-          name: hostPathOrName,
-          mountPath,
-        };
-      }),
+      deploy: getDeploy(command),
+      ports: getPorts(ports),
+      env: getEnv(environment),
+      mounts: getMounts(volumes),
     },
   };
 }

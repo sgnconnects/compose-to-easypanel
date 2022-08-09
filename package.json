@@ -3,9 +3,9 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "ui:dev": "next dev",
+    "ui:build": "next build",
+    "ui:start": "next start",
     "lint": "next lint",
     "test": "jest",
     "dev:test": "jest --watchAll --silent=false"
