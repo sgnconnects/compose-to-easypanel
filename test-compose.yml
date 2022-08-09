@@ -1,18 +1,8 @@
-version: "3"
+version: "3.9"
 services:
-  adminer:
-    image: adminer
-    restart: always
+  test:
+    container_name: "test_app"
     ports:
-      - 8080:8080
-    volumes:
-      - volume:/vol
-      - /bind:/bind
-    command: "echo working!"
-
-  db:
-    image: mysql:543
-    restart: always
+      - 3000:3000
     environment:
-      MYSQL_ROOT_PASSWORD: examplePassword
-      MYSQL_PASSWORD: examplePasswordNonRoot
+      API_KEY: "api_key"

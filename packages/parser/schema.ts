@@ -1,7 +1,7 @@
 /**
- * this code defines the diffrent easypanel schemas
+ * this code defines the different easypanel schemas
  * This Code comes from the github repo easypanel/easypanel-templates
- * main contributer and developer of easypanel: https://github.com/deiucanta
+ * main contributor and developer of easypanel: https://github.com/deiucanta
  */
 
 import { z } from "zod";
@@ -176,3 +176,12 @@ export const templateSchema = z.object({
 export const supportedServiceTypes: Array<
   "app" | "postgres" | "mongo" | "redis" | "mysql"
 > = ["app", "postgres", "mongo", "redis", "mysql"];
+
+export const supportedComposeProps = [
+  "container_name",
+  "image",
+  "command",
+  "ports",
+  "environment",
+  "volumes",
+];

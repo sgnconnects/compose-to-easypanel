@@ -1,29 +1,29 @@
 # Docker Compose to Easypanel
 
-[compose-to-easypanel](https://npmjs.com/package/compose-to-easypanel)
-
 Easypanel is a Beautiful, Easy to use Server Control Panel based on Docker [easypanel.io](https://easypanel.io).
 
-with this package you are able to create an Easypanel Schema based on your docker-compose file
+with this little App you are able to create an Easypanel Schema based on your docker-compose file
 
 ## Quickstart
 
-### Via Npx
+### Ui App
 
-The CLI can be easily run via npx:
+#### View on Netlify
+
+goto [compose-to-easypanel.netlify.app](https://compose-to-easypanel.netlify.app)
+
+#### Local
+
+1. Clone The Repo `gh repo clone ravenbroetzmann/compose-to-easypanel`
+2. `cd compose-to-easypanel`
+3. `yarn install`,
+4. `yarn dev`
+5. the app should now be available on [localhost:3000](http://localhost:3000)
+
+### CLI
 
 ```sh
-npx compose-to-easypanel <projectName> -i <docker-compose.yml> -o <output-file.json>
-```
-
-### Via Npm
-
-```sh
-npm install -g compose-to-easypanel
-```
-
-```sh
-compose-to-easypanel <projectName> -i <docker-compose.yml> -o <output-file.json>
+npx compose-to-easypanel <project_name> -i <docker-compose.yml> -o <schema-output-file.json>
 ```
 
 ## Example
@@ -51,17 +51,15 @@ services:
       MYSQL_PASSWORD: examplePasswordNonRoot
 ```
 
-### Run the CLI
+### Go to the UI
 
-```sh
-npx mysql-adminer -i ./docker-compose.yml -o ./mysql-adminer-schema.json
-```
+paste the file contents in the left hand side textarea on the website
 
 ### Copy the Schema
 
-after running this command you should be able to view the json schema under `./mysql-adminer-schema.json`
+after running this command you can view and edit the schema on the right hand side
 
-Generated Schema:
+**Generated Schema:**
 
 ```json
 {
@@ -92,7 +90,7 @@ Generated Schema:
 
 after you copied the schema you can go to your easypanel Dashboard. Go to `your-project`, select `templates` and scroll all the way down to **developer** an then click `Create from Schema`
 
-Please note:
+**Please note**:
 Domains and Proxys are currently not supported, you need to add these manually via the Easypanel dashboard
 
 ## Supported Docker Compose Properties
@@ -234,12 +232,11 @@ Generated Schema:
 
 docker-compose file:
 
-please specify the command as string!
-
 ```yml
 # ...
-command: yarn start # that works
-# command: ["yarn", "start"] won't work !
+command: yarn start
+# or
+command: ["yarn", "start"]
 ```
 
 Generated Schema:
