@@ -24,6 +24,8 @@ const Editor: React.FC = () => {
       setIsFirstRender(false);
       return;
     }
+
+    if (yml === "") return;
     const parsed = generateEasypanelFromCompose(yml, projectName);
     setSchema(parsed.schema || "");
     setError(parsed.error);

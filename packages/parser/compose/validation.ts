@@ -19,6 +19,9 @@ export function validate(compose: DockerCompose): Validation {
   const isV3 = isVersion3(compose.version);
   if (!isV3) return { error: true, message: ERROR_MESSAGES.notV3 };
 
+  const allObjects = servicePropsAreAllObjects(compose.services);
+  if (!allObjects) return { error: true, message: ERROR_MESSAGES.notAllObj };
+
   const notSupported = notSupportedProps(compose);
 
   if (notSupported.length > 0)
@@ -75,4 +78,16 @@ export function notSupportedProps(compose: DockerCompose): string[] {
   });
 
   return notSupported;
+}
+
+export function servicePropsAreAllObjects(
+  services: DockerCompose["services"]
+): boolean {
+  const keys = Object.keys(services);
+  const isObject = keys.map((key) => {
+    return typeof services[key] === "object";
+  });
+
+  if (isObject.includes(false)) return false;
+  else return true;
 }

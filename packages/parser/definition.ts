@@ -33,4 +33,5 @@ export const SUPPORTED_COMPOSE_PROPS = [
 export const ERROR_MESSAGES = {
   reqProps: `Please specify "version" as string and "services" as object`,
   notV3: "Please use Compose Version 3.x to use this generator",
+  notAllObj: "Your services need to be type object",
 };
